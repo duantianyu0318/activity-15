@@ -19,6 +19,7 @@ This document (1) Data Wrangling Code for Armed Forces Data from public sources,
 ## Data Wrangling Code for Armed Forces Data
 
 ```{r}
+# Coding Style: tidyverse style guide
 library(tidyverse)
 library(rvest)
 library(googlesheets4)
