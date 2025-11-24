@@ -23,6 +23,7 @@ We want to use the R language and the ggplot2 function to make a graph of this b
 ## Code for the Box Problem
 
 ```{r}
+# Coding Style: tidyverse style guide
 library(tidyverse)
 library(ggplot2)
 
