@@ -1,0 +1,100 @@
+---
+title: "Plotting a Mathematical Function"
+author: "Tianyu Duan"
+date: "2025-11-15"
+format:
+  pdf:
+    toc: false
+    geometry: margin=1in
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Introduction
+
+We will use a 36-inch by 48-inch sheet of paper to answer the box problem in this activity.
+
+We can make an open box by cutting a square with side length x from each corner and folding the four sides up.
+
+We want to use the R language and the ggplot2 function to make a graph of this box's volume function and determine the x value that makes the box's volume the biggest.
+
+## Code for the Box Problem
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+
+W <- 36; L <- 48
+
+vol_box <- function(x, L, W) x * (L - 2*x) * (W - 2*x)
+
+x_star <- ((L + W) - sqrt((L + W)^2 - 3*L*W)) / 6
+V_max  <- vol_box(x_star, L, W)
+base_L <- L - 2*x_star
+base_W <- W - 2*x_star
+
+#| fig-alt: "Volume versus cut size x for an open-top box from a 36 by 48 inch sheet. The curve peaks at x≈6.79 inches; a dashed vertical line marks the maximum."
+#| fig-width: 7
+#| fig-height: 4.5
+#| fig-dpi: 300
+ggplot(data.frame(x = c(0, min(L, W)/2)), aes(x = x)) +
+  stat_function(fun = function(x) vol_box(x, L, W), linewidth = 1) +
+  geom_vline(xintercept = x_star, linetype = 2) +
+  labs(
+    title    = "Box Problem: Volume vs. Cut Size (x)",
+    subtitle = "Sheet = 36×48 in; V(x) = x (48−2x) (36−2x)",
+    x = "Cut size x (inches)",
+    y = "Volume (cubic inches)"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title.position = "plot")
+```
+
+## Visualization
+
+```{r}
+#| fig-cap: "Volume function for the 36×48 inch sheet. The dashed line marks the cut size x that gives the maximum volume."
+#| fig-alt: "Graph of box volume versus cut size x for a 36 by 48 inch sheet. The curve rises to a single peak at around x = 6.8 inches, where the box reaches its maximum volume, then declines back to zero."
+#| fig-width: 7
+#| fig-height: 4.5
+#| fig-dpi: 300
+
+library(ggplot2)
+
+# Function: volume as a function of cut size x
+vol_box <- function(x, L, W) x * (L - 2*x) * (W - 2*x)
+
+# Paper dimensions
+L <- 48
+W <- 36
+
+# Compute maximum point analytically
+x_star <- ((L + W) - sqrt((L + W)^2 - 3*L*W)) / 6
+
+# Create the plot using ggplot2
+ggplot(data.frame(x = c(0, min(L, W)/2)), aes(x = x)) +
+  stat_function(fun = function(x) vol_box(x, L, W),
+                linewidth = 1, color = "steelblue") +
+  geom_vline(xintercept = x_star, linetype = 2, color = "red") +
+  labs(
+    title    = "Box Problem: Volume vs. Cut Size (x)",
+    subtitle = "Sheet = 36 × 48 inches; V(x) = x(48−2x)(36−2x)",
+    x        = "Cut size x (inches)",
+    y        = "Volume (cubic inches)"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title.position = "plot")
+```
+
+## Narrative Text for the Box Problem
+
+The graph shows that the volume increases rapidly as x grows from zero, reaches a single peak, and then declines back to zero when the sides of the box collapse.\
+At this cut size, the base of the box measures 34.4 inches by 24.4 inches, and the height of the box is 6.8 inches.\
+This combination of dimensions creates the largest possible box volume for a sheet that is 36 inches by 48 inches.\
+The charts and results demonstrate that mathematical modeling and visualization can clearly determine the optimal design parameters.
+
+## Reflection
+
+In this workshop, I learned how to create clear and practical charts using R and ggplot2. Through completing the "Box Problem" and "Baby Names Project," I learned how to clean data, build functions, and create charts that are easier to read and suitable for colorblind individuals. I also learned that using titles, labels, and scale options is crucial for making numbers come alive.
