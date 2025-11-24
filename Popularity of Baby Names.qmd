@@ -19,6 +19,7 @@ This document contains: (1) Code for the Popular Baby Names Project, (2) Visuali
 ## Code for the Popular Baby Names Project
 
 ```{r}
+# Coding Style: tidyverse style guide
 library(tidyverse)
 library(ggplot2)
 
